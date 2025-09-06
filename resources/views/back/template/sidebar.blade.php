@@ -48,46 +48,29 @@
                 <li class="menu-title"><span>alat</span></li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('kalibrasi.index') }}">
-                        <i class="ri-folder-line"></i> <span>kalibrasi</span>
+                        <i class="ri-folder-line"></i> <span>Kalibrasi</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('maintenance.index') }}">
-                        <i class="ri-folder-line"></i> <span>maintanance</span>
+                        <i class="ri-folder-line"></i> <span>Maintanance</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('instalasi.index') }}">
-                        <i class="ri-folder-line"></i> <span>instalasi</span>
+                        <i class="ri-folder-line"></i> <span>Instalasi</span>
                     </a>
                 </li>
 
-                <li class="menu-title"><span>laporan</span></li>
+                <li class="menu-title"><span>Laporan</span></li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('laporan.index') }}">
-                        <i class="ri-notification-3-line"></i> <span>laporan kalibrasi</span>
+                        <i class="ri-notification-3-line"></i> <span>Laporan Kalibrasi</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('laporan-maintenance.index') }}">
-                        <i class="ri-notification-3-line"></i> <span>laporan maintenance</span>
-                    </a>
-                </li>
-
-                <li class="menu-title"><span>Layanan & Klinik</span></li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
-                        <i class="ri-service-line"></i> <span>Layanan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
-                        <i class="ri-hospital-line"></i> <span>Klinik</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
-                        <i class="ri-chat-quote-line"></i> <span>Testimoni</span>
+                        <i class="ri-notification-3-line"></i> <span>Laporan Maintenance</span>
                     </a>
                 </li>
             </ul>

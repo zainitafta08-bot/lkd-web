@@ -5,13 +5,30 @@ namespace App\Http\Controllers;
 
 use App\Models\LaporanMaintenance;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class LaporanMaintenanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $laporan = LaporanMaintenance::all();
-        return view('laporan-maintenance.index', compact('laporan'));
+        if ($request->ajax()) {
+            $laporan = LaporanMaintenance::query();
+            return DataTables::of($laporan)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    $btn = '<a href="'.route('laporan-maintenance.show', $row->id).'" class="btn btn-info btn-sm">View</a> ';
+                    $btn .= '<a href="'.route('laporan-maintenance.edit', $row->id).'" class="btn btn-warning btn-sm">Edit</a> ';
+                    $btn .= '<form action="'.route('laporan-maintenance.destroy', $row->id).'" method="POST" style="display:inline;">
+                                '.csrf_field().'
+                                '.method_field('DELETE').'
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                             </form>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('laporan-maintenance.index');
     }
 
     public function create()

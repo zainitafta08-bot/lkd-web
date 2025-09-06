@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kalibrasi;
+use Yajra\DataTables\Facades\DataTables;
 
 class KalibrasiController extends Controller
 {
@@ -12,20 +13,24 @@ class KalibrasiController extends Controller
      */
     public function index(Request $request)
     {
-        $kalibrasis = Kalibrasi::query();
-
-        // Check for a search query and filter the results.
-        if ($request->has('search')) {
-            $search = $request->search;
-            $kalibrasis->where('nama_alat', 'like', '%' . $search . '%')
-                       ->orWhere('merk_alat', 'like', '%' . $search . '%')
-                       ->orWhere('tipe_alat', 'like', '%' . $search . '%');
+        if ($request->ajax()) {
+            $kalibrasis = Kalibrasi::query();
+            return DataTables::of($kalibrasis)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    $btn = '<a href="'.route('kalibrasi.show', $row->id).'" class="btn btn-info btn-sm">View</a> ';
+                    $btn .= '<a href="'.route('kalibrasi.edit', $row->id).'" class="btn btn-warning btn-sm">Edit</a> ';
+                    $btn .= '<form action="'.route('kalibrasi.destroy', $row->id).'" method="POST" style="display:inline;">
+                                '.csrf_field().'
+                                '.method_field('DELETE').'
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                             </form>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-
-        // Retrieve the filtered or all data.
-        $kalibrasis = $kalibrasis->get();
-
-        return view('kalibrasi.index', compact('kalibrasis'));
+        return view('kalibrasi.index');
     }
 
     /**

@@ -13,6 +13,10 @@
     <link rel="shortcut icon" href="{{ asset("assets/logo.png") }}">
  
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
  
     <!-- jsvectormap css -->
     <link href="{{ asset('assets/back') }}/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
@@ -151,11 +155,17 @@
  
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
  
     <!-- App js -->
     <script src="{{ asset('assets/back') }}/js/app.js"></script>
  
-    @stack('script')
+    @stack('scripts')
 </body>
  
  

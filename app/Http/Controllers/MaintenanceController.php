@@ -4,15 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Maintenance;
+use Yajra\DataTables\Facades\DataTables;
 class MaintenanceController extends Controller
 {
    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $maintenances = maintenance::all();
-        return view('maintenance.index', compact('maintenances'));
+        if ($request->ajax()) {
+            $maintenances = Maintenance::query();
+            return DataTables::of($maintenances)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    $btn = '<a href="'.route('maintenance.show', $row->id).'" class="btn btn-info btn-sm">View</a> ';
+                    $btn .= '<a href="'.route('maintenance.edit', $row->id).'" class="btn btn-warning btn-sm">Edit</a> ';
+                    $btn .= '<form action="'.route('maintenance.destroy', $row->id).'" method="POST" style="display:inline;">
+                                '.csrf_field().'
+                                '.method_field('DELETE').'
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                             </form>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('maintenance.index');
     }
 
     /**

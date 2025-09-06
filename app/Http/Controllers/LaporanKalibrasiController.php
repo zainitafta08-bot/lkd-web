@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LaporanKalibrasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class LaporanKalibrasiController extends Controller
 {
@@ -38,10 +39,35 @@ class LaporanKalibrasiController extends Controller
     /**
      * Tampilkan daftar laporan lengkap.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $laporan = LaporanKalibrasi::all();
-        return view('laporan.index', compact('laporan'));
+        if ($request->ajax()) {
+            $laporan = LaporanKalibrasi::query();
+            return DataTables::of($laporan)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    $btn = '<a href="'.route('laporan.show', $row->id).'" class="btn btn-info btn-sm">View</a> ';
+                    $btn .= '<a href="'.route('laporan.edit', $row->id).'" class="btn btn-warning btn-sm">Edit</a> ';
+                    if ($row->file_path) {
+                        $btn .= '<a href="'.route('laporan.download', $row->id).'" class="btn btn-success btn-sm">Download</a> ';
+                    }
+                    $btn .= '<form action="'.route('laporan.destroy', $row->id).'" method="POST" style="display:inline;">
+                                '.csrf_field().'
+                                '.method_field('DELETE').'
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                             </form>';
+                    return $btn;
+                })
+                ->addColumn('file_download', function($row) {
+                    if ($row->file_path) {
+                        return '<a href="'.route('laporan.download', $row->id).'" class="btn btn-sm btn-outline-primary">Download File</a>';
+                    }
+                    return 'No File';
+                })
+                ->rawColumns(['action', 'file_download'])
+                ->make(true);
+        }
+        return view('laporan.index');
     }
 
     /**

@@ -16,45 +16,58 @@
         </div>
     @endif
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>No</th>
-                <th>Nama Alat</th>
-                <th>Merk</th>
-                <th>No. Seri</th>
-                <th>Tgl. Kalibrasi</th>
-                <th>Tgl. Next Kalibrasi</th>
-                <th>Hasil</th>
-                <th>Teknisi</th>
-                <th width="280px">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($laporan as $item)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->nama_alat }}</td>
-                <td>{{ $item->merk }}</td>
-                <td>{{ $item->no_seri }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->tgl_kalibrasi)->format('d-m-Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->tgl_next_kalibrasi)->format('d-m-Y') }}</td>
-                <td>{{ $item->hasil }}</td>
-                <td>{{ $item->teknisi }}</td>
-                <td>
-                    <form action="{{ route('laporan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                        <a href="{{ route('laporan.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <a href="{{ route('laporan.show', $item->id) }}" class="btn btn-sm btn-primary">detail</a>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="card-body">
+            <table id="laporanTable" class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Alat</th>
+                        <th>Merk</th>
+                        <th>No. Seri</th>
+                        <th>Tgl. Kalibrasi</th>
+                        <th>Tgl. Next Kalibrasi</th>
+                        <th>Hasil</th>
+                        <th>Teknisi</th>
+                        <th>File</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+@push('script')
+<!-- jQuery HARUS di atas DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#laporanTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('laporan.index') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'nama_alat', name: 'nama_alat'},
+                {data: 'merk', name: 'merk'},
+                {data: 'no_seri', name: 'no_seri'},
+                {data: 'tgl_kalibrasi', name: 'tgl_kalibrasi'},
+                {data: 'tgl_next_kalibrasi', name: 'tgl_next_kalibrasi'},
+                {data: 'hasil', name: 'hasil'},
+                {data: 'teknisi', name: 'teknisi'},
+                {data: 'file_download', name: 'file_download', orderable: false, searchable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
+            }
+        });
+    });
+</script>
+@endpush
 @endsection

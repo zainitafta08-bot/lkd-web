@@ -4,15 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Instalasi;
+use Yajra\DataTables\Facades\DataTables;
 class InstalasiController extends Controller
 {
    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $instalasis = instalasi::all();
-        return view('instalasi.index', compact('instalasis'));
+        if ($request->ajax()) {
+            $instalasis = Instalasi::query();
+            return DataTables::of($instalasis)
+                ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    $btn = '<a href="'.route('instalasi.show', $row->id).'" class="btn btn-info btn-sm">View</a> ';
+                    $btn .= '<a href="'.route('instalasi.edit', $row->id).'" class="btn btn-warning btn-sm">Edit</a> ';
+                    $btn .= '<form action="'.route('instalasi.destroy', $row->id).'" method="POST" style="display:inline;">
+                                '.csrf_field().'
+                                '.method_field('DELETE').'
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                             </form>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('instalasi.index');
     }
 
     /**

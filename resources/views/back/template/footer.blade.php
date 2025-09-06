@@ -2,7 +2,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Klinik Pratama Dr. Abdul Radjak.
+                            <script>document.write(new Date().getFullYear())</script> © Kalibrasi Digital .
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
