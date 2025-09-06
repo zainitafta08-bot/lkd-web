@@ -165,7 +165,7 @@
     <!-- App js -->
     <script src="{{ asset('assets/back') }}/js/app.js"></script>
  
-    @stack('scripts')
+    @stack('script')
 </body>
  
  
