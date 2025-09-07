@@ -91,7 +91,21 @@
                 {data: 'nama_alat', name: 'nama_alat'},
                 {data: 'merk_alat', name: 'merk_alat'},
                 {data: 'tipe_alat', name: 'tipe_alat'},
-                {data: 'tanggal_kalibrasi', name: 'tanggal_kalibrasi', className: 'text-center'},
+                {
+                    data: 'tanggal_kalibrasi', 
+                    name: 'tanggal_kalibrasi', 
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        if (data) {
+                            var date = new Date(data);
+                            var day = String(date.getDate()).padStart(2, '0');
+                            var month = String(date.getMonth() + 1).padStart(2, '0');
+                            var year = date.getFullYear();
+                            return day + '-' + month + '-' + year;
+                        }
+                        return '';
+                    }
+                },
                 {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
             ],
             language: {

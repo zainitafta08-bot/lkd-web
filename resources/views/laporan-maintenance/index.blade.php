@@ -94,7 +94,21 @@
                 {data: 'nama_alat', name: 'nama_alat'},
                 {data: 'merk', name: 'merk'},
                 {data: 'no_seri', name: 'no_seri', className: 'text-center'},
-                {data: 'tgl_maintenance', name: 'tgl_maintenance', className: 'text-center'},
+                {
+                    data: 'tgl_maintenance', 
+                    name: 'tgl_maintenance', 
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        if (data) {
+                            var date = new Date(data);
+                            var day = String(date.getDate()).padStart(2, '0');
+                            var month = String(date.getMonth() + 1).padStart(2, '0');
+                            var year = date.getFullYear();
+                            return day + '-' + month + '-' + year;
+                        }
+                        return '';
+                    }
+                },
                 {data: 'tindakan', name: 'tindakan'},
                 {data: 'hasil', name: 'hasil'},
                 {data: 'teknisi', name: 'teknisi'},
