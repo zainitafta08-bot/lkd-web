@@ -62,13 +62,13 @@
                                 <span class="d-flex align-items-center">
                                     <i class="ri-user-3-line fs-4"></i>
                                     <span class="text-start ms-xl-2">
-                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">ade</span>
+                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Auth::user()->name ?? 'Guest' }}</span>
                                     </span>
                                 </span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
-                                <h6 class="dropdown-header">Welcome ade !</h6>
+                                <h6 class="dropdown-header">Welcome {{ Auth::user()->name ?? 'Guest' }} !</h6>
  
                                 <div class="dropdown-divider"></div>
  
