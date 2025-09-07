@@ -2,7 +2,6 @@
 @section('title', 'Detail Laporan Kalibrasi')
 @section('content')
 <div class="container-fluid">
-    <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -17,8 +16,6 @@
             </div>
         </div>
     </div>
-    <!-- end page title -->
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -28,7 +25,6 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <!-- Informasi Alat -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <h5 class="text-primary mb-3">
@@ -71,7 +67,6 @@
                         </div>
                     </div>
 
-                    <!-- Tanggal Kalibrasi -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <h5 class="text-primary mb-3">
@@ -102,7 +97,6 @@
                         </div>
                     </div>
 
-                    <!-- Hasil Perhitungan -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <h5 class="text-primary mb-3">
@@ -121,8 +115,8 @@
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-muted">Nilai Pengukuran</label>
                                 <div class="p-3 bg-light rounded">
-                                    @if($laporan->nilai_pengukuran)
-                                        @foreach(json_decode($laporan->nilai_pengukuran) as $nilai)
+                                    @if(is_array($laporan->nilai_pengukuran) || is_object($laporan->nilai_pengukuran))
+                                        @foreach($laporan->nilai_pengukuran as $nilai)
                                             <span class="badge bg-primary me-1 mb-1">{{ number_format($nilai, 10) }}</span>
                                         @endforeach
                                     @else
@@ -165,7 +159,6 @@
                         </div>
                     </div>
 
-                    <!-- Hasil Kalibrasi -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <h5 class="text-primary mb-3">
@@ -177,7 +170,6 @@
                         </div>
                     </div>
 
-                    <!-- File Laporan -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <h5 class="text-primary mb-3">
@@ -201,7 +193,6 @@
                         </div>
                     </div>
 
-                    <!-- Timestamp -->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -227,7 +218,6 @@
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex gap-2 justify-content-end">

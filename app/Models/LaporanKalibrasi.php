@@ -23,14 +23,17 @@ class LaporanKalibrasi extends Model
         'teknisi',
         'file_path',
         'u_a_value',
-        'rata_rata', // Tambahkan ini
-        'standar_deviasi', // Tambahkan ini
-        'nilai_koreksi' // Tambahkan ini
+        'rata_rata',
+        'standar_deviasi',
+        'nilai_koreksi',
+        'nilai_setting', // Tambahan
+        'nilai_pengukuran', // Tambahan
     ];
 
     // Jika mau format tanggal otomatis
     protected $casts = [
         'tgl_kalibrasi' => 'date',
-        'tgl_next_kalibrasi' => 'date'
+        'tgl_next_kalibrasi' => 'date',
+        'nilai_pengukuran' => 'array', // Tambahan: ini sangat penting!
     ];
 }
